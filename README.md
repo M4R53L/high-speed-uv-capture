@@ -118,10 +118,10 @@ sudo ./playback_controller
 
 ## ✅ Roadmap
 
-- [x] Build UV sensor trigger using Pico  
-- [x] Capture 100ms burst using OV7251 + libcamera  
-- [x] Buffer frames in RAM  
-- [x] Display playback on HDMI monitor  
+- [ ] Build UV sensor trigger using Pico  
+- [ ] Capture 100ms burst using OV7251 + libcamera  
+- [ ] Buffer frames in RAM  
+- [ ] Display playback on HDMI monitor  
 - [ ] Implement UI button logic in C  
 - [ ] Optional: LED strobe control (frame sync)  
 - [ ] Add video export or frame save  
@@ -135,6 +135,3 @@ sudo ./playback_controller
 
 ---
 
-## 📜 License
-
-MIT License
