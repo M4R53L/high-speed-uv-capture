@@ -1,23 +1,21 @@
-📸 High-Speed UV-Triggered Polymerization Capture System
-🎯 Project Summary
-This embedded system captures and visualizes a polymerization reaction triggered by a UV light flash. The reaction transforms liquid into solid in under 100ms. This system:
+# 📸 High-Speed UV-Triggered Polymerization Capture System
 
-Detects the UV flash using a sensor
+## 🎯 Project Summary
 
-Captures a high-speed video burst using a global shutter camera (OV7251)
+This embedded system captures and visualizes a **polymerization reaction** triggered by a **UV light flash**. The reaction transforms liquid into solid in under **100ms**. This system:
 
-Displays the process in slow motion (2–4 seconds) on a standard HDMI screen
+- Detects the UV flash using a sensor  
+- Captures a high-speed video burst using a **global shutter camera (OV7251)**  
+- Displays the process in **slow motion (2–4 seconds)** on a standard HDMI screen  
+- Uses **physical buttons** to control playback (Play / Pause / Reset)  
+- Prioritizes **C/C++ implementation** for performance and control  
+- Designed to be **low-cost, modular, and embedded**
 
-Uses physical buttons to control playback (Play / Pause / Reset)
+---
 
-Prioritizes C/C++ implementation for performance and control
+## 🧠 System Architecture
 
-Designed to be low-cost, modular, and embedded
-
-🧠 System Architecture
-plaintext
-Copy
-Edit
+```
 [ UV Flash (external) ]
           ↓
    [ UV Sensor (GUVA-S12SD) ]
@@ -33,83 +31,110 @@ Edit
   ├ Buffers 10–20 grayscale frames to RAM
   ├ Displays playback on HDMI
   └ Handles button inputs (Play, Pause, Reset)
-🔩 Hardware Components
-Component	Function
-Raspberry Pi 5	Main processor for image capture/playback
-OV7251 Global Shutter Camera	High-speed, distortion-free imaging
-Raspberry Pi Pico	Real-time UV detection + trigger signaling
-GUVA-S12SD UV Sensor	Analog UV light detection sensor
-Physical Buttons (x3)	User input (Play, Pause, Reset)
-HDMI Display	Playback monitor
-High-power UV LED (optional)	External light source for testing
-Breadboard + Wires	Prototyping connections
-Power Supply (5V 3A+)	Power for Pi 5 and camera
-📁 Repository Structure
-mathematica
-Copy
-Edit
+```
+
+---
+
+## 🔩 Hardware Components
+
+| Component                  | Function                                  |
+|----------------------------|-------------------------------------------|
+| Raspberry Pi 5             | Main processor for image capture/playback |
+| OV7251 Global Shutter Camera | High-speed, distortion-free imaging     |
+| Raspberry Pi Pico          | Real-time UV detection + trigger signaling |
+| GUVA-S12SD UV Sensor       | Analog UV light detection sensor          |
+| Physical Buttons (x3)      | User input (Play, Pause, Reset)           |
+| HDMI Display               | Playback monitor                          |
+| High-power UV LED (optional) | External light source for testing       |
+| Breadboard + Wires         | Prototyping connections                   |
+| Power Supply (5V 3A+)      | Power for Pi 5 and camera                 |
+
+---
+
+## 📁 Repository Structure
+
+```
 📁 high-speed-uv-capture/
-├── pico_firmware/             ← C code for Pi Pico (UV detection + GPIO)
+├── pico_firmware/               ← C code for Pi Pico (UV detection + GPIO)
 │   ├── uv_trigger.c
-│   ├── led_strobe.c (optional)
+│   ├── led_strobe.c             (optional)
 │   └── Makefile
-├── pi_software/               ← C/C++ code for Raspberry Pi 5
-│   ├── capture_controller.c   ← libcamera-based frame capture
-│   ├── playback_controller.c  ← slow-motion frame display logic
-│   ├── gpio_input.c           ← Button control handler
+├── pi_software/                 ← C/C++ code for Raspberry Pi 5
+│   ├── capture_controller.c     ← libcamera-based frame capture
+│   ├── playback_controller.c    ← slow-motion frame display logic
+│   ├── gpio_input.c             ← Button control handler
 │   └── Makefile
-├── camera_config/             ← OV7251 + libcamera configuration
+├── camera_config/               ← OV7251 + libcamera configuration
 │   ├── dt_overlay.dts
 │   └── libcamera_modes.txt
-├── captured_frames/           ← Temporary storage of captured frame data
-├── docs/                      ← Diagrams, hardware notes
+├── captured_frames/             ← Temporary storage of captured frame data
+├── docs/                        ← Diagrams, hardware notes
 │   ├── system_architecture.md
 │   └── wiring_diagram.pdf
-├── images/                    ← Output frames or demo photos
+├── images/                      ← Output frames or demo photos
 ├── LICENSE
 └── README.md
-🛠️ Build & Run Instructions
-Raspberry Pi Pico
-bash
-Copy
-Edit
+```
+
+---
+
+## 🛠️ Build & Run Instructions
+
+### Raspberry Pi Pico
+
+```bash
 cd pico_firmware
 make flash
-# Uses Pico SDK, builds firmware to detect UV and send GPIO trigger
-Raspberry Pi 5
-bash
-Copy
-Edit
+```
+
+> Uses Pico SDK, builds firmware to detect UV and send GPIO trigger
+
+---
+
+### Raspberry Pi 5
+
+```bash
 cd pi_software
 make
+
 sudo ./capture_controller
 # Waits for GPIO trigger from Pico and captures burst
+
 sudo ./playback_controller
 # Handles frame playback via framebuffer or SDL
-🎛️ Button Functions (Pi 5 GPIO Inputs)
-Button	Function
-Button 1	Play Playback
-Button 2	Pause Playback
-Button 3	Reset / Arm again
-✅ Roadmap
- Build UV sensor trigger using Pico
+```
 
- Capture 100ms burst using OV7251 + libcamera
+---
 
- Buffer frames in RAM
+## 🎛️ Button Functions (Pi 5 GPIO Inputs)
 
- Display playback on HDMI monitor
+| Button   | Function           |
+|----------|--------------------|
+| Button 1 | Play Playback      |
+| Button 2 | Pause Playback     |
+| Button 3 | Reset / Arm again  |
 
- Implement UI button logic in C
+---
 
- Optional: LED strobe control (frame sync)
+## ✅ Roadmap
 
- Add video export or frame save
+- [x] Build UV sensor trigger using Pico  
+- [x] Capture 100ms burst using OV7251 + libcamera  
+- [x] Buffer frames in RAM  
+- [x] Display playback on HDMI monitor  
+- [ ] Implement UI button logic in C  
+- [ ] Optional: LED strobe control (frame sync)  
+- [ ] Add video export or frame save  
+- [ ] Build 3D-printed enclosure for final mount  
 
- Build 3D-printed enclosure for final mount
+---
 
-📷 Demo Output (Coming Soon)
-Add sample captured frames or playback video here after testing the full pipeline.
+## 📷 Demo Output (Coming Soon)
 
-📜 License
+> Add sample captured frames or playback video here after testing the full pipeline.
+
+---
+
+## 📜 License
+
 MIT License
